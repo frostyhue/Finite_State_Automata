@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- HTML -->
+<html lang="en">
+<!-- Head -->
+<head>
+    <meta charset="UTF-8">
+    <title>Tool</title>
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'style/materialize.min.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/square-root-alt-solid.ico'%} type='image/x-icon' ">
+    <!-- /CSS -->
+</head>
+<!-- /Head -->
+<!-- Body -->
+<body>
+<!-- NavBar -->
+<nav>
+    <div style="background: #26a69a" class="nav-wrapper">
+      <a style="margin-left: 20px;" href="/tool/" class="brand-logo">RT</a>
+    </div>
+  </nav>
+<!-- /NavBar -->
+    {% block content %}
+    {% endblock %}
+<!-- script-->
+<script src="{% static 'script/materialize.js' %}"></script>
+<script src="{% static 'script/materialize.min.js' %}"></script>
+<script src="{% static 'script/jquery-3.3.1.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $('select').formSelect();
+  });
+    M.textareaAutoResize($('#textarea1'));
+</script>
+<script>
+    function filterInput(input) {
+        var regex = /[^a-z()~%&|>, =]/gi;
+        input.value = input.value.replace(regex, "")
+    }
+</script>
+<!-- /script -->
+</body>
+<!-- /Body -->
+</html>
+<!-- /HTML -->

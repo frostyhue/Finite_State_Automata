@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    <h5 class="center-align">This is the test page!</h5>
+    <!-- Container -->
+<div class="container">
+<!-- Input row -->
+    <!-- Row -->
+    <div class="row">
+        <label>Browser Select</label>
+        <!-- Select -->
+        <select class="browser-default">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="Tokens">Tokens</option>
+            <option value="Parser">Parser</option>
+            <option value="Interpreter">Interpreter</option>
+            <option value="TruthTable">Truth Table</option>
+            <option value="SimplifyTT">Truth Table</option>
+            <option value="SimplifyTT">Truth Table</option>
+        </select>
+        <!-- /Select -->
+    </div>
+<!-- /Row -->
+</div>
+    <!-- /Container -->
+{%  endblock %}
