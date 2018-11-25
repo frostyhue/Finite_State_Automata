@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0adb9a7-c309-4280-974a-5378e3e25b92" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/Lexer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Token.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/Token_Regex.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/django_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/django_project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/tests/readme.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +33,8 @@
         <entry file="file://$PROJECT_DIR$/tests/readme.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="136">
-                <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+              <first_editor relative-caret-position="51">
+                <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
               </first_editor>
               <second_editor />
             </state>
@@ -372,8 +366,8 @@
     <entry file="file://$PROJECT_DIR$/tests/readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="136">
-            <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <first_editor relative-caret-position="51">
+            <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
           </first_editor>
           <second_editor />
         </state>
