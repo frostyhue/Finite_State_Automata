@@ -175,6 +175,13 @@ class TestLexer(unittest.TestCase):
         value_to_compare_with = [Token('transitions:', RESERVED)]
         self.assertListEqual(result, value_to_compare_with)
 
+    def test_parser_if_recognizes_end_reserved(self):
+        sequence_of_letter_chars = 'end.'
+        lexer = Lexer(sequence_of_letter_chars)
+        result = lexer.lex()
+        value_to_compare_with = [Token('end.', RESERVED)]
+        self.assertListEqual(result, value_to_compare_with)
+
     def test_lexer_complex_string3(self):
         lexer_complex_string3 = Lexer(self.complex_string3_input)
         result_complex_string3 = lexer_complex_string3.lex()

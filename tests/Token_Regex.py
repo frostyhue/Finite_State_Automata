@@ -26,6 +26,7 @@ token_expressions = [
     (r'states:',                    RESERVED),
     (r'final:',                     RESERVED),
     (r'transitions:',               RESERVED),
+    (r'end.',                       RESERVED),
     (r'[A-Z]',                      LETTER_CAPITAL),
     (r'[a-z]',                      LETTER_SMALL),
     (r'[0-9]',                      NUMBER),
