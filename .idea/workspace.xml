@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0adb9a7-c309-4280-974a-5378e3e25b92" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Test_Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test_Lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Token_Regex.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Token_Regex.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/tests/readme.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -45,8 +40,8 @@
       <file leaf-file-name="Test_Lexer.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/Test_Lexer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="154" column="46" selection-start-line="154" selection-start-column="46" selection-end-line="154" selection-end-column="46" />
+            <state relative-caret-position="440">
+              <caret line="180" column="73" selection-start-line="180" selection-start-column="73" selection-end-line="180" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -447,8 +442,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/Test_Lexer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="154" column="46" selection-start-line="154" selection-start-column="46" selection-end-line="154" selection-end-column="46" />
+        <state relative-caret-position="440">
+          <caret line="180" column="73" selection-start-line="180" selection-start-column="73" selection-end-line="180" selection-end-column="73" />
         </state>
       </provider>
     </entry>

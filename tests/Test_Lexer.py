@@ -69,6 +69,12 @@ class TestLexer(unittest.TestCase):
                                         Token('o', LETTER_SMALL), Token('Y', LETTER_CAPITAL), \
                                         Token('-', DASH), Token('|', PIPE)]
 
+        self.complex_string3_input = 'alphabet: abswgf'
+        self.complex_string3_output = [Token('alphabet:', RESERVED), Token('a', LETTER_SMALL), \
+                                       Token('b', LETTER_SMALL), Token('s', LETTER_SMALL), \
+                                       Token('w', LETTER_SMALL), Token('g', LETTER_SMALL), \
+                                       Token('f', LETTER_SMALL)]
+
     def test_lexer_letters(self):
 
         lexer_letters_test = Lexer(self.letter_input)
@@ -168,6 +174,12 @@ class TestLexer(unittest.TestCase):
         result = lexer.lex()
         value_to_compare_with = [Token('transitions:', RESERVED)]
         self.assertListEqual(result, value_to_compare_with)
+
+    def test_lexer_complex_string3(self):
+        lexer_complex_string3 = Lexer(self.complex_string3_input)
+        result_complex_string3 = lexer_complex_string3.lex()
+        self.assertListEqual(result_complex_string3, self.complex_string3_output)
+
 
 if __name__ == '__main__':
     unittest.main()
