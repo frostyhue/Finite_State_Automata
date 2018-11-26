@@ -20,7 +20,7 @@ class Lexer(object):
         self.tokens = []
         self.current_token = ''
 
-    # The method that divides the expression into Tokens.
+    # Method that divides the expression into Tokens.
     def lex(self):
         pos = 0
         tokens = []
@@ -36,7 +36,7 @@ class Lexer(object):
                         tokens.append(Token(value, type))
                     break
             if not match:
-                sys.stderr.write('Illegal character: %s' % self.expression[pos])
+                sys.stderr.write('Illegal character: %s\\n' % self.expression[pos])
                 sys.exit(1)
             else:
                 pos = match.end(0)
@@ -44,14 +44,14 @@ class Lexer(object):
         self.current_token = self.tokens[self.pos]
         return tokens
 
-    # The method that checks if it is the end of the expression, if yes return True, else return False.
+    # Method that checks if it is the end of the expression, if yes return True, else return False.
     def expr_end(self):
         if self.pos == len(self.tokens)-1:
             return True
         else:
             return False
 
-    # The method that progresses to the next token.
+    # Method that goes to the position of the next token.
     def token_next(self):
         self.pos += 1
         self.current_token = self.tokens[self.pos]

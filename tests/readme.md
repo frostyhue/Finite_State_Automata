@@ -6,3 +6,4 @@ This file contains all of the information regarding the unit tests of the projec
 - Lexer (X)
 - Parser 
 - Interpreter
+- Graph generation

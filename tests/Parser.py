@@ -22,6 +22,6 @@ class Parser(object):
     def pop_token(self, token_type):
         if self.current_token.type == token_type:
             if not self.lexer.expr_end():
-                self.current_token = self.lexer.get_next_token()
+                self.current_token = self.lexer.token_next()
         else:
             self.error()

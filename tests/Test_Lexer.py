@@ -140,5 +140,34 @@ class TestLexer(unittest.TestCase):
         result_complex_string2 = lexer_complex_string2.lex()
         self.assertListEqual(result_complex_string2, self.complex_string2_output)
 
+
+    def test_parser_if_recognize_alphabet_reserved(self):
+        sequence_of_letter_chars = 'alphabet:'
+        lexer = Lexer(sequence_of_letter_chars)
+        result = lexer.lex()
+        value_to_compare_with = [Token('alphabet:', RESERVED)]
+        self.assertListEqual(result, value_to_compare_with)
+
+    def test_parser_if_recognize_states_reserved(self):
+        sequence_of_letter_chars = 'states:'
+        lexer = Lexer(sequence_of_letter_chars)
+        result = lexer.lex()
+        value_to_compare_with = [Token('states:', RESERVED)]
+        self.assertListEqual(result, value_to_compare_with)
+
+    def test_parser_if_recognize_final_reserved(self):
+        sequence_of_letter_chars = 'final:'
+        lexer = Lexer(sequence_of_letter_chars)
+        result = lexer.lex()
+        value_to_compare_with = [Token('final:', RESERVED)]
+        self.assertListEqual(result, value_to_compare_with)
+
+    def test_parser_if_recognize_transitions_reserved(self):
+        sequence_of_letter_chars = 'transitions:'
+        lexer = Lexer(sequence_of_letter_chars)
+        result = lexer.lex()
+        value_to_compare_with = [Token('transitions:', RESERVED)]
+        self.assertListEqual(result, value_to_compare_with)
+
 if __name__ == '__main__':
     unittest.main()
