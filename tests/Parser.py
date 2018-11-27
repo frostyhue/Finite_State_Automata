@@ -78,3 +78,17 @@ class Parser(object):
                 self.pop_token(RESERVED)
         else:
             print('Unexpected type!')
+
+    def process_if_dfa(self):
+        is_dfa = False
+        for transition in self.transitions:
+            for transition_to_compare_wtih in self.transitions:
+                if not transition_to_compare_wtih.checked == True:
+                    if transition.origin == transition_to_compare_wtih.origin \
+                        and transition.edge == transition_to_compare_wtih.edge \
+                        and not transition.destination == transition_to_compare_wtih.destination:
+                        is_dfa = False
+                    else:
+                        is_dfa = True
+            transition.checked = True
+        return is_dfa

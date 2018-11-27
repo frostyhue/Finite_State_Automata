@@ -8,6 +8,7 @@ class Transition(object):
         self.origin = origin
         self.destination = destination
         self.edge = edge
+        self.checked = False
 
     def __eq__(self, other):
         return self.origin == other.origin and self.edge == other.edge and self.destination == other.destination
