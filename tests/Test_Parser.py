@@ -37,6 +37,29 @@ class TestLexer(unittest.TestCase):
 
         self.assertEqual(final_test_expected, final_test_output)
 
+    def test_parser_if_assigns_transitions(self):
+        transitions_test_value = 'transitions: \
+                                        Z,a --> A \
+                                        Z,b --> Z \
+                                        A,b --> Z \
+                                        A,a --> B \
+                                        B,b --> B \
+                                        B,a --> B \
+                                        end.'
+        transitions_test_lexer = Lexer(transitions_test_value)
+        transitions_test_parser = Parser(transitions_test_lexer)
+        transitions_test_parser.process_statement()
+        transitions_test_output = transitions_test_parser.transitions
+
+        transitions_test_expected = [Transition(origin='Z', edge='a', destination='A'), \
+                                     Transition(origin='Z', edge='b', destination='Z'), \
+                                     Transition(origin='A', edge='b', destination='Z'), \
+                                     Transition(origin='A', edge='a', destination='B'), \
+                                     Transition(origin='B', edge='b', destination='B'), \
+                                     Transition(origin='B', edge='a', destination='B'),]
+
+        self.assertEqual(transitions_test_expected, transitions_test_output)
+
 
 if __name__ == '__main__':
     unittest.main()

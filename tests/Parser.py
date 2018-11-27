@@ -57,6 +57,6 @@ class Parser(object):
                     self.pop_token(LETTER_CAPITAL)
                     if self.current_token.type == COMMA:
                         self.pop_token(COMMA)
-            
+
         else:
             print('Unexpected type!')
