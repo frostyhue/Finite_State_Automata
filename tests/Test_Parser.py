@@ -60,6 +60,23 @@ class TestLexer(unittest.TestCase):
 
         self.assertEqual(transitions_test_expected, transitions_test_output)
 
+    def test_parser_if_input_is_dfa(self):
+        dfa_test_value = 'transitions: \
+                                                Z,a --> A \
+                                                Z,b --> Z \
+                                                A,b --> Z \
+                                                A,a --> B \
+                                                B,b --> B \
+                                                B,a --> B \
+                                                end.'
+        dfa_test_lexer = Lexer(dfa_test_value)
+        dfa_test_parser = Parser(dfa_test_lexer)
+        dfa_test_parser.process_statement()
+        dfa_test_result = dfa_test_parser.process_if_dfa()
+
+        self.assertEqual(True, dfa_test_result)
+
+
 
 if __name__ == '__main__':
     unittest.main()
