@@ -27,4 +27,15 @@ class Parser(object):
         else:
             self.error()
 
-    
+    def process_statement(self):
+        token = self.current_token
+        if token.type == RESERVED:
+            if token.value == 'alphabet:':
+                self.pop_token(RESERVED)
+                while self.current_token.type == LETTER_SMALL:
+                    self.alphabet.append(self.current_token)
+                    if self.lexer.expr_end():
+                        break
+                    self.pop_token(LETTER_SMALL)
+        else:
+            print('Unexpected type!')
