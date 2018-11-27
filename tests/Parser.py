@@ -14,6 +14,7 @@ class Parser(object):
         self.tokens_list = lexer.lex()
         self.current_token = self.tokens_list[0]
         self.alphabet = []
+        self.states = []
 
     # Method that raises and error.
     def error(self):
@@ -37,5 +38,14 @@ class Parser(object):
                     if self.lexer.expr_end():
                         break
                     self.pop_token(LETTER_SMALL)
+            elif token.value == 'states:':
+                self.pop_token(RESERVED)
+                while self.current_token.type == LETTER_CAPITAL:
+                    self.states.append(self.current_token)
+                    if self.lexer.expr_end():
+                        break
+                    self.pop_token(LETTER_CAPITAL)
+                    if self.current_token.type == COMMA:
+                        self.pop_token(COMMA)
         else:
             print('Unexpected type!')
