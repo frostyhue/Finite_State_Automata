@@ -89,12 +89,12 @@ class Parser(object):
                         and not transition.destination == transition_to_compare_wtih.destination:
                         is_dfa = False
                         break
-                    if is_dfa == False:
+                    if not is_dfa:
                         break
-                if is_dfa == False:
+                if not is_dfa:
                     break
 
-            if is_dfa == False:
+            if not is_dfa:
                 break
             transition.checked = True
         return is_dfa
