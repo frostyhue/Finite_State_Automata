@@ -21,7 +21,7 @@ class Parser(object):
 
     # Method that raises and error.
     def error(self, type_got):
-        print('Token type {type} expected, revceived {type_got}!'.format(type=self.current_token.type, type_got=type_got))
+        print('Token type {type} expected, received {type_got}!'.format(type=self.current_token.type, type_got=type_got))
 
     # Method that goes to the next token if the current one has already been processed.
     def pop_token(self, token_type):
