@@ -13,6 +13,7 @@ class Parser(object):
         self.lexer = lexer
         self.tokens_list = lexer.lex()
         self.current_token = self.tokens_list[0]
+        self.alphabet = []
 
     # Method that raises and error.
     def error(self):
@@ -25,3 +26,5 @@ class Parser(object):
                 self.current_token = self.lexer.token_next()
         else:
             self.error()
+
+    
