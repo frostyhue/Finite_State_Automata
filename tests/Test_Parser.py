@@ -26,6 +26,17 @@ class TestLexer(unittest.TestCase):
 
         self.assertEqual(states_test_expected, states_test_output)
 
+    def test_parser_if_assigns_final(self):
+        states_test_value = 'final: B'
+        final_test_lexer = Lexer(states_test_value)
+        final_test_parser = Parser(final_test_lexer)
+        final_test_parser.process_statement()
+        final_test_output = final_test_parser.final
+
+        final_test_expected = [Token('B', LETTER_CAPITAL),]
+
+        self.assertEqual(final_test_expected, final_test_output)
+
 
 if __name__ == '__main__':
     unittest.main()
