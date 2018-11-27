@@ -80,7 +80,7 @@ class Parser(object):
             print('Unexpected type!')
 
     def process_if_dfa(self):
-        is_dfa = False
+        is_dfa = True
         for transition in self.transitions:
             for transition_to_compare_wtih in self.transitions:
                 if not transition_to_compare_wtih.checked == True:
@@ -88,7 +88,13 @@ class Parser(object):
                         and transition.edge == transition_to_compare_wtih.edge \
                         and not transition.destination == transition_to_compare_wtih.destination:
                         is_dfa = False
-                    else:
-                        is_dfa = True
+                        break
+                    if is_dfa == False:
+                        break
+                if is_dfa == False:
+                    break
+
+            if is_dfa == False:
+                break
             transition.checked = True
         return is_dfa
