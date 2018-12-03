@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a0adb9a7-c309-4280-974a-5378e3e25b92" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/tests/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/State.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/State.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Test_Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Test_Parser.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,13 +29,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/Parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+            <state relative-caret-position="542">
+              <caret line="113" selection-start-line="113" selection-end-line="113" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test_Parser.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/Test_Parser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="491">
+              <caret line="117" column="62" selection-start-line="117" selection-start-column="62" selection-end-line="117" selection-end-column="62" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,14 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test_Parser.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/Test_Parser.py">
+      <file leaf-file-name="Edge.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/Edge.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="255">
+              <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
             </state>
           </provider>
         </entry>
@@ -113,8 +121,8 @@
         <option value="$PROJECT_DIR$/tests/Test_State.py" />
         <option value="$PROJECT_DIR$/tests/Test_Edge.py" />
         <option value="$PROJECT_DIR$/tests/State.py" />
-        <option value="$PROJECT_DIR$/tests/Test_Parser.py" />
         <option value="$PROJECT_DIR$/tests/Parser.py" />
+        <option value="$PROJECT_DIR$/tests/Test_Parser.py" />
       </list>
     </option>
   </component>
@@ -601,13 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Edge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/Test_State.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -632,13 +633,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Test_Parser.py">
+    <entry file="file://$PROJECT_DIR$/tests/Edge.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
         </state>
       </provider>
     </entry>
@@ -651,10 +649,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/Parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+        <state relative-caret-position="542">
+          <caret line="113" selection-start-line="113" selection-end-line="113" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Test_Parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="117" column="62" selection-start-line="117" selection-start-column="62" selection-end-line="117" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

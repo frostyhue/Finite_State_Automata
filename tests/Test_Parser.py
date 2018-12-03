@@ -93,7 +93,39 @@ class TestLexer(unittest.TestCase):
 
         self.assertEqual(False, dfa_test_result)
 
+    def test_parser_if_transitions_processed(self):
+        dfa_test_value = 'transitions: \
+                                                        Z,b --> A \
+                                                        Z,b --> Z \
+                                                        A,b --> Z \
+                                                        A,a --> B \
+                                                        B,b --> B \
+                                                        B,a --> B \
+                                                        end.'
+        dfa_test_lexer_transitions = Lexer(dfa_test_value)
+        dfa_test_parser = Parser(dfa_test_lexer_transitions)
+        dfa_test_parser.process_statement()
 
+        states_test_value = 'states: Z, A, B'
+        states_test_lexer = Lexer(states_test_value)
+        dfa_test_parser.new_lexer(states_test_lexer)
+
+        dfa_test_parser.process_statement()
+        dfa_test_parser.process_transitions()
+        test_state1 = State(name='Z')
+        test_state1.state_edges.append(Edge(label='b', destination='A'))
+        test_state1.state_edges.append(Edge(label='b', destination='Z'))
+        self.assertEqual(dfa_test_parser.states[0], test_state1)
+
+        test_state2 = State(name='A')
+        test_state2.state_edges.append(Edge(label='b', destination='Z'))
+        test_state2.state_edges.append(Edge(label='a', destination='B'))
+        self.assertEqual(dfa_test_parser.states[1], test_state2)
+
+        test_state3 = State(name='B')
+        test_state3.state_edges.append(Edge(label='b', destination='B'))
+        test_state3.state_edges.append(Edge(label='a', destination='B'))
+        self.assertEqual(dfa_test_parser.states[2], test_state3)
 
 
 if __name__ == '__main__':

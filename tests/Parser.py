@@ -101,3 +101,13 @@ class Parser(object):
             transition.checked = True
         return is_dfa
 
+    def new_lexer(self, lexer):
+        self.lexer = lexer
+        self.tokens_list = lexer.lex()
+        self.current_token = self.tokens_list[0]
+
+    def process_transitions(self):
+        for transition in self.transitions:
+            for state in self.states:
+                if transition.origin == state.state_name:
+                    state.add_edge(Edge(destination=transition.destination, label=transition.edge))
