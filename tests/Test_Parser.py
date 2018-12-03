@@ -1,4 +1,5 @@
 from Parser import *
+from State import *
 import unittest
 
 class TestLexer(unittest.TestCase):
@@ -22,7 +23,7 @@ class TestLexer(unittest.TestCase):
         states_test_parser.process_statement()
         states_test_output = states_test_parser.states
 
-        states_test_expected = [Token('Z', LETTER_CAPITAL), Token('A', LETTER_CAPITAL), Token('B', LETTER_CAPITAL),]
+        states_test_expected = [State(name='Z'), State(name='A'), State(name='B')]
 
         self.assertEqual(states_test_expected, states_test_output)
 
@@ -33,7 +34,7 @@ class TestLexer(unittest.TestCase):
         final_test_parser.process_statement()
         final_test_output = final_test_parser.final
 
-        final_test_expected = [Token('B', LETTER_CAPITAL),]
+        final_test_expected = [State(name='B'),]
 
         self.assertEqual(final_test_expected, final_test_output)
 
@@ -91,6 +92,7 @@ class TestLexer(unittest.TestCase):
         dfa_test_result = dfa_test_parser.process_if_dfa()
 
         self.assertEqual(False, dfa_test_result)
+
 
 
 

@@ -1,5 +1,7 @@
 from Lexer import *
 from Transition import *
+from State import *
+from Edge import *
 
 ###############################################################################
 #                                                                             #
@@ -44,7 +46,7 @@ class Parser(object):
             elif token.value == 'states:':
                 self.pop_token(RESERVED)
                 while self.current_token.type == LETTER_CAPITAL:
-                    self.states.append(self.current_token)
+                    self.states.append(State(name=self.current_token.value))
                     if self.lexer.expr_end():
                         break
                     self.pop_token(LETTER_CAPITAL)
@@ -53,7 +55,7 @@ class Parser(object):
             elif token.value == 'final:':
                 self.pop_token(RESERVED)
                 while self.current_token.type == LETTER_CAPITAL:
-                    self.final.append(self.current_token)
+                    self.final.append(State(self.current_token.value))
                     if self.lexer.expr_end():
                         break
                     self.pop_token(LETTER_CAPITAL)
@@ -98,3 +100,4 @@ class Parser(object):
                 break
             transition.checked = True
         return is_dfa
+
