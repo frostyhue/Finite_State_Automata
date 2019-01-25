@@ -17,10 +17,18 @@ STAR = 'STAR'
 DOT = 'DOT'
 PIPE = 'PIPE'
 NUMBER = 'NUMBER'
+RESERVED = 'RESERVED'
+LPAR = 'LPAR'
+RPAR = 'RPAR'
 
 # List with regular expressions to recognise token types.
 token_expressions = [
     (r'[ \n\t]+',                   None),
+    (r'alphabet:',                  RESERVED),
+    (r'states:',                    RESERVED),
+    (r'final:',                     RESERVED),
+    (r'transitions:',               RESERVED),
+    (r'end.',                       RESERVED),
     (r'[A-Z]',                      LETTER_CAPITAL),
     (r'[a-z]',                      LETTER_SMALL),
     (r'[0-9]',                      NUMBER),
@@ -32,5 +40,7 @@ token_expressions = [
     (r'[_]',                        UNDERSCORE),
     (r'[*]',                        STAR),
     (r'[.]',                        DOT),
-    (r'[|]',                        PIPE)
+    (r'[|]',                        PIPE),
+    (r'[(]',                        LPAR),
+    (r'[)]',                        RPAR),
 ]

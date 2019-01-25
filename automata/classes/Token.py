@@ -13,7 +13,10 @@ class Token(object):
 
     # Method returning the token as a string(base method in python).
     def __str__(self):
-        return 'Token({type}, {value})'.format(type=self.type, value = self.value)
+        return 'Token({value}, {type})'.format(type=self.type, value = self.value)
+
+    def __eq__(self, other):
+        return self.type == other.type and self.value == other.value
 
     # Method returning the token as a string(base method in python).
     def __repr__(self):
