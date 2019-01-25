@@ -11,7 +11,6 @@ class StateMachine(object):
         self.regex = None
         self.states = None
         self.transitions = None
-        self.final = None
         self.alphabet = None
         self.initial_state = None
 
@@ -77,19 +76,27 @@ class StateMachine(object):
     def update_lists(self):
         self.states = self.parser.states
         self.transitions = self.parser.transitions
-        self.final = self.parser.final
         self.alphabet = self.parser.alphabet
         self.initial_state = self.parser.initial_state
 
-    def make_final_state(self):
-        for final in self.final:
-            for state in self.states:
-                print(state)
-                if state == final:
-                    state.final = True
 
     def process_transitions(self):
+        # dest_stat = ''
+        # for transition in self.transitions:
+        #     for state in self.states:
+        #         if state.state_name == transition.origin:
+        #             for destination in self.states:
+        #                 if destination.state_name == transition.destination:
+        #                     dest_stat = destination
+        #             print('Destination')
+        #             print(dest_stat)
+        #             state.add_edge(Edge(label=transition.edge, destination=dest_stat))
+        print('Trans:')
         for transition in self.transitions:
-            for state in self.states:
-                if state.state_name == transition.origin:
-                    state.add_edge(Edge(label=transition.edge, destination=transition.destination))
+            if not transition.checked:
+                for state in self.states:
+                    if state.state_name == transition.origin:
+                        for dest_state in self.states:
+                            if dest_state.state_name == transition.destination:
+                                state.add_edge(Edge(label=transition.edge, destination=dest_state))
+                                transition.checked = True

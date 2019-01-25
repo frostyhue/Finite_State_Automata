@@ -21,18 +21,13 @@ def main():
         print(letter)
     for state in state_machine.states:
         print(state)
-    print('Final: ')
-    print(state_machine.final)
-    state_machine.make_final_state()
-    print('States: ')
-    for state in state_machine.states:
-        print(state)
     state_machine.process_transitions()
-    print('States with edges: ')
+    print(len(state_machine.states))
     for state in state_machine.states:
-        print(state.state_name + 's')
+        print(state.state_name)
         for edge in state.state_edges:
-            print(edge)
+            print(edge.edge_label)
+            print(edge.edge_destination)
 
 
 

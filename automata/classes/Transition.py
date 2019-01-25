@@ -17,7 +17,7 @@ class Transition(object):
 
     # Method returning the token as a string whenever the object if printed.
     def __str__(self):
-        return 'State({origin}, {destination}, {edge})'.format(origin=self.origin, destination=self.destination, \
+        return 'Transition({origin}, {edge}, {destination})'.format(origin=self.origin, destination=self.destination, \
                                                                edge=self.edge)
 
     def __repr__(self):
