@@ -157,10 +157,11 @@ class Parser(object):
 
     def regex_nfa(self, _expression):
         self.new_expression(_expression)
-        return self.parse_nfa()
+        self.parse_nfa()
+        return self._states, self._transitions
 
     def parse_nfa(self):
-        self.self._states = []
+        self._states = []
         self._transitions = []
 
         token = self.current_token

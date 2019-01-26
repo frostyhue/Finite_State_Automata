@@ -96,8 +96,8 @@ class StateMachine(object):
 
     def regex_to_nfa(self, regex):
         NFA = StateMachine(self.parser)
-        tuple = NFA.parser.regex_nfa(regex)
-        print(tuple)
+        result = NFA.parser.regex_nfa(regex)
+        print(result)
 
     # def validate_word(self, word):
     #     valid = False
