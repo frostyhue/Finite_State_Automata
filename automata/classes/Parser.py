@@ -20,6 +20,7 @@ class Parser(object):
         self.transitions = []
         self.alphabet = []
         self.initial_state = ''
+        self._state_number = 0
 
     # Method that raises and error.
     def error(self, type_got):
@@ -154,6 +155,65 @@ class Parser(object):
 
         return node
 
+    def regex_nfa(self, _expression):
+        self.new_expression(_expression)
+        return self.parse_nfa()
+
+    def parse_nfa(self):
+        self.self._states = []
+        self._transitions = []
+
+        token = self.current_token
+        if token.type in (LETTER_SMALL, UNDERSCORE):
+            state = State('S' + str(self._state_number))
+            self._state_number += 1
+            letter = self.current_token.value
+            self.pop_token(LETTER_SMALL)
+            if self.current_token.type == COMMA:
+                self.pop_token(COMMA)
+            if self.current_token.type == RPAR:
+                self.pop_token(RPAR)
+            return state, letter
+        elif token.type == DOT:
+            self.pop_token(DOT)
+            self.pop_token(LPAR)
+            _origin_and_edge = self.parse_nfa()
+            self._states.append(_origin_and_edge[0])
+            _dest_and_edge = self.parse_nfa()
+            self._states.append(_dest_and_edge[0])
+            _end_state = State('S' + str(self._state_number))
+            self._states.append(_end_state)
+            self._transitions.append(Transition(_origin_and_edge[0].state_name, _origin_and_edge[1], _dest_and_edge[0].state_name))
+            self._transitions.append(Transition(_dest_and_edge[0].state_name, _dest_and_edge[1], _end_state.state_name))
+            return _origin_and_edge[0], _end_state
+        elif token.type == STAR:
+            self.pop_token(STAR)
+            self.pop_token(LPAR)
+            _origin_and_end = self.parse_nfa()
+            self._states.append(_origin_and_end[0])
+            _e_state_1 = State('S' + str(self._state_number))
+            self._states.append(_e_state_1)
+            self._transitions.append(Transition(_e_state_1.state_name, '_', _origin_and_end[0].state_name))
+            _e_state_2 = State('S' + str(self._state_number))
+            self._states.append(_e_state_2)
+            self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _e_state_2.state_name))
+            self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _origin_and_end[0].state_name))
+            self._transitions.append(Transition(_e_state_1.state_name, '_', _e_state_2.state_name))
+            self.pop_token(RPAR)
+            return _e_state_1, _e_state_2
+        elif token.type == PIPE:
+            self.pop_token(PIPE)
+            self.pop_token(LPAR)
+            _origin_edge_letter = self.parse_nfa()
+            self._states.append(_origin_edge_letter[0])
+            _dest_second_edge = self.parse_nfa()
+            self._states.append(_dest_second_edge[0])
+            self._transitions.append(Transition(_origin_edge_letter[0].state_name, _origin_edge_letter[1], _dest_second_edge[0].state_name))
+            self._transitions.append(Transition(_origin_edge_letter[0].state_name, _dest_second_edge[1], _dest_second_edge[0].state_name))
+            return _origin_edge_letter[0], _dest_second_edge[0]
+
+        return self._states, self._transitions
+
     def new_expression(self, _expression):
         self.tokens_list = self.lexer.lex(_expression)
         self.current_token = self.tokens_list[0]
@@ -166,29 +226,3 @@ class Parser(object):
     def parse_regex(self):
         node = self.process_regex()
         return node
-
-    # def validate_word(self, word):
-    #     valid = False
-    #     current_state = self.initial_state
-    #     edges_with_same_label_count = 0
-    #     for letter in word:
-    #         possible_states = []
-    #         print(letter)
-    #         for edge in current_state.state_edges:
-    #             if edge.edge_label == letter:
-    #                 edges_with_same_label_count +=1
-    #                 possible_states = self.check_states(edge.edge_destination.state_name)
-    #         if edges_with_same_label_count == 1:
-    #             current_state = possible_states[0]
-    #             edges_with_same_label_count == 0
-    #             valied = True
-    #         elif edges_with_same_label_count == 0:
-    #             valied = False
-    #         if current_state.state_name == self.final[0].state_name:
-    #             break
-    #     return valid
-
-
-
-
-

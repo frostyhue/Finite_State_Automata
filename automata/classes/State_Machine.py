@@ -41,12 +41,6 @@ class StateMachine(object):
                 states.append(state)
         return states
 
-    def process_transitions(self):
-        for transition in self.transitions:
-            for state in self.states:
-                if transition.origin == state.state_name:
-                    state.add_edge(Edge(destination=transition.destination, label=transition.edge))
-
     def from_file(self):
         list = []
         list_formatted = []
@@ -79,7 +73,6 @@ class StateMachine(object):
         self.alphabet = self.parser.alphabet
         self.initial_state = self.parser.initial_state
 
-
     def process_transitions(self):
         # dest_stat = ''
         # for transition in self.transitions:
@@ -91,12 +84,38 @@ class StateMachine(object):
         #             print('Destination')
         #             print(dest_stat)
         #             state.add_edge(Edge(label=transition.edge, destination=dest_stat))
-        print('Trans:')
         for transition in self.transitions:
-            if not transition.checked:
-                for state in self.states:
-                    if state.state_name == transition.origin:
-                        for dest_state in self.states:
-                            if dest_state.state_name == transition.destination:
-                                state.add_edge(Edge(label=transition.edge, destination=dest_state))
-                                transition.checked = True
+            for state in self.states:
+                if state.state_name == transition.origin:
+                    for dest_state in self.states:
+                        if dest_state.state_name == transition.destination:
+                            state.add_edge(Edge(label=transition.edge, destination=dest_state))
+
+    def check_if_finite(self):
+        return True
+
+    def regex_to_nfa(self, regex):
+        NFA = StateMachine(self.parser)
+        tuple = NFA.parser.regex_nfa(regex)
+        print(tuple)
+
+    # def validate_word(self, word):
+    #     valid = False
+    #     current_state = self.initial_state
+    #     edges_with_same_label_count = 0
+    #     for letter in word:
+    #         possible_states = []
+    #         print(letter)
+    #         for edge in current_state.state_edges:
+    #             if edge.edge_label == letter:
+    #                 edges_with_same_label_count +=1
+    #                 possible_states = self.check_states(edge.edge_destination.state_name)
+    #         if edges_with_same_label_count == 1:
+    #             current_state = possible_states[0]
+    #             edges_with_same_label_count == 0
+    #             valied = True
+    #         elif edges_with_same_label_count == 0:
+    #             valied = False
+    #         if current_state.state_name == self.final[0].state_name:
+    #             break
+    #     return valid

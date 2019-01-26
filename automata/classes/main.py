@@ -4,6 +4,7 @@ from Lexer import *
 from Parser import *
 from State_Machine import *
 
+
 def main():
     lexer = Lexer()
     parser = Parser(lexer)
@@ -28,7 +29,8 @@ def main():
         for edge in state.state_edges:
             print(edge.edge_label)
             print(edge.edge_destination)
-
+    print(state_machine.process_if_dfa())
+    state_machine.regex_to_nfa('.(a,b)')
 
 
 if __name__ == '__main__':
