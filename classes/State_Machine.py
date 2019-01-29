@@ -8,6 +8,7 @@ TO-DO
 3.
 """
 
+
 class StateMachine(object):
 
     def __init__(self, parser):
@@ -22,6 +23,8 @@ class StateMachine(object):
     def process_if_dfa(self):
         is_dfa = True
         for transition in self.transitions:
+            if transition.edge == '_':
+                continue
             for transition_to_compare_with in self.transitions:
                 if not transition_to_compare_with.checked:
                     if transition.origin == transition_to_compare_with.origin \
@@ -74,6 +77,10 @@ class StateMachine(object):
             if not transition.edge == '_' and transition.edge not in self.alphabet:
                 self.alphabet.append(transition.edge)
 
+    def process_states_no_edges_final(self):
+        for state in self.states:
+            if not state.state_edges:
+                state.final = True
 
     # def validate_word(self, word):
     #     valid = False
