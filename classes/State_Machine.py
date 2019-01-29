@@ -1,7 +1,12 @@
 from classes.Edge import *
 from classes.Interpreter import *
 import re
-
+"""
+TO-DO
+1.Method getting the alphabet after regex parsing. DONE
+2.Method making states without any edges to final.
+3.
+"""
 
 class StateMachine(object):
 
@@ -11,7 +16,7 @@ class StateMachine(object):
         self.regex = None
         self.states = None
         self.transitions = None
-        self.alphabet = None
+        self.alphabet = []
         self.initial_state = None
 
     def process_if_dfa(self):
@@ -43,6 +48,7 @@ class StateMachine(object):
 
     def parse_regex(self, _expr):
         self.parser.regex_nfa(_expr)
+        self.update_lists()
 
     def from_regex(self, _expression):
         self.interpreter = Interpreter(self.parser)
@@ -62,6 +68,12 @@ class StateMachine(object):
                 for dest_state in self.states:
                     if state.state_name == transition.origin and dest_state.state_name == transition.destination:
                         state.add_edge(Edge(label=transition.edge, destination=dest_state))
+
+    def process_alphabet_regex(self):
+        for transition in self.transitions:
+            if not transition.edge == '_' and transition.edge not in self.alphabet:
+                self.alphabet.append(transition.edge)
+
 
     # def validate_word(self, word):
     #     valid = False
