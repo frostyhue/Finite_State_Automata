@@ -2,6 +2,7 @@ from Lexer import *
 from Transition import *
 from State import *
 from Edge import *
+from Operations import *
 
 ###############################################################################
 #                                                                             #
@@ -16,10 +17,11 @@ class Parser(object):
         self.lexer = lexer
         self.tokens_list = lexer.lex()
         self.current_token = self.tokens_list[0]
-        self.alphabet = []
         self.states = []
-        self.final = []
         self.transitions = []
+        self.final = []
+        self.alphabet = []
+        self.initial_state = ''
 
     # Method that raises and error.
     def error(self, type_got):
@@ -65,6 +67,10 @@ class Parser(object):
                 self.pop_token(RESERVED)
                 while not self.current_token.value == 'end.':
                     origin = self.current_token.value
+                    if type(self.initial_state) == str:
+                        for state in self.states:
+                            if state.state_name == origin:
+                                self.initial_state = state
                     self.pop_token(LETTER_CAPITAL)
                     self.pop_token(COMMA)
                     edge = self.current_token.value
@@ -81,33 +87,99 @@ class Parser(object):
         else:
             print('Unexpected type!')
 
-    def process_if_dfa(self):
-        is_dfa = True
-        for transition in self.transitions:
-            for transition_to_compare_wtih in self.transitions:
-                if not transition_to_compare_wtih.checked == True:
-                    if transition.origin == transition_to_compare_wtih.origin \
-                        and transition.edge == transition_to_compare_wtih.edge \
-                        and not transition.destination == transition_to_compare_wtih.destination:
-                        is_dfa = False
-                        break
-                    if not is_dfa:
-                        break
-                if not is_dfa:
-                    break
+    def process_regex(self):
+        token = self.current_token
+        node = ""
 
-            if not is_dfa:
-                break
-            transition.checked = True
-        return is_dfa
+        if token.type == LETTER_SMALL:
+            # probably for assigning an alphabet letter!
+            # self.pred_list.append(token.value)
+            node = Letter(self.current_token)
+            self.pop_token(LETTER_SMALLq)
 
-    def new_lexer(self, lexer):
-        self.lexer = lexer
-        self.tokens_list = lexer.lex()
+            if self.current_token.type == COMMA:
+                self.pop_token(COMMA)
+
+            if self.current_token.type == RPAR:
+                self.pop_token(RPAR)
+
+            return node
+
+        # Logic if the current token is a start for repeating the letter.
+        elif token.type == STAR:
+            op = Token(type=STAR, value='*')
+            self.pop_token(STAR)
+            if self.current_token.type == LPAR:
+                self.pop_token(LPAR)
+            node = Repeat(op=op, letter=self.process_regex())
+            return node
+
+        elif token.type == UNDERSCORE:
+            # Logic if the current token is a start for repeating the letter.
+            op = Token(type=UNDERSCORE, value='e')
+            self.pop_token(UNDERSCORE)
+            if self.current_token.type == LPAR:
+                self.pop_token(LPAR)
+            node = ET(symbol=self.process_regex())
+            return node
+
+        # Logic if the current token is one of the Contingency operators.
+        elif token.type in (DOT, PIPE):
+            if token.type == DOT:
+                op = Token(type=DOT, value='.')
+            elif token.type == BICOND:
+                op = Token(type=PIPE, value='|')
+            self.pop_token(token.type)
+            self.pop_token(LPAR)
+            node = TransitionOp(left=self.op_statement(), op=op, right=self.op_statement())
+            return node
+
+        # Logic if the current token is a right parentheses.
+        elif token.type == RPAR:
+            self.pop_token(RPAR)
+            node = self.op_statement()
+            return node
+
+        # Logic if the current token is a comma.
+        elif token.type == COMMA:
+            self.pop_token(COMMA)
+            node = self.op_statement()
+            return node
+
+        return node
+
+    def new_lexer(self, _expression):
+        self.lexer = Lexer(_expression)
+        self.tokens_list = self.lexer.lex()
         self.current_token = self.tokens_list[0]
 
-    def process_transitions(self):
-        for transition in self.transitions:
-            for state in self.states:
-                if transition.origin == state.state_name:
-                    state.add_edge(Edge(destination=transition.destination, label=transition.edge))
+
+    def parse(self):
+        node = self.process_regex()
+        return node
+
+    # def validate_word(self, word):
+    #     valid = False
+    #     current_state = self.initial_state
+    #     edges_with_same_label_count = 0
+    #     for letter in word:
+    #         possible_states = []
+    #         print(letter)
+    #         for edge in current_state.state_edges:
+    #             if edge.edge_label == letter:
+    #                 edges_with_same_label_count +=1
+    #                 possible_states = self.check_states(edge.edge_destination.state_name)
+    #         if edges_with_same_label_count == 1:
+    #             current_state = possible_states[0]
+    #             edges_with_same_label_count == 0
+    #             valied = True
+    #         elif edges_with_same_label_count == 0:
+    #             valied = False
+    #         if current_state.state_name == self.final[0].state_name:
+    #             break
+    #     return valid
+
+
+
+
+

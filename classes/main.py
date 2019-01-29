@@ -30,7 +30,7 @@ def main():
             print(edge.edge_label)
             print(edge.edge_destination)
     print(state_machine.process_if_dfa())
-    state_machine.regex_to_nfa('.(a,b)')
+    state_machine.regex_to_nfa('*(a)')
 
 
 if __name__ == '__main__':

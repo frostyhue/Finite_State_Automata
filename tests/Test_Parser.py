@@ -2,7 +2,7 @@ from Parser import *
 from State import *
 import unittest
 
-class TestLexer(unittest.TestCase):
+class TestParser(unittest.TestCase):
 
     def test_parser_if_assigns_alphabet(self):
 
@@ -126,6 +126,9 @@ class TestLexer(unittest.TestCase):
         test_state3.state_edges.append(Edge(label='b', destination='B'))
         test_state3.state_edges.append(Edge(label='a', destination='B'))
         self.assertEqual(dfa_test_parser.states[2], test_state3)
+
+
+
 
 
 if __name__ == '__main__':

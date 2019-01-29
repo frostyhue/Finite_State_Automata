@@ -56,3 +56,27 @@ class Lexer(object):
         self.pos += 1
         self.current_token = self.tokens[self.pos]
         return self.current_token
+
+    def from_file(self):
+        list = []
+        list_formatted = []
+        _text = ''
+        with open('file.txt') as f:
+            f_contents = f.readlines()
+            for line in f_contents:
+                if not line.isspace():
+                    list.append(line.strip())
+            for line in list:
+                # if str(line) in (r'transitions:', r'[-->]', r'end.'):
+                if re.search(r'end.', str(line)) or re.search(r'transitions:', str(line)) or re.search(r'-->',
+                                                                                                       str(line)):
+                    _text += str(line)
+                    if re.search(r'end.', str(line)):
+                        list_formatted.append(_text)
+                else:
+                    list_formatted.append(str(line))
+        return list_formatted
+
+    def from_regex(self):
+        regex = ''
+        return regex

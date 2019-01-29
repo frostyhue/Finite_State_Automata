@@ -46,7 +46,7 @@ class StateMachine(object):
         list_formatted = []
         _text = ''
         with open('file.txt') as f:
-            f_contents = f.readlines();
+            f_contents = f.readlines()
             for line in f_contents:
                 if not line.isspace():
                     list.append(line.strip())
@@ -97,7 +97,9 @@ class StateMachine(object):
     def regex_to_nfa(self, regex):
         NFA = StateMachine(self.parser)
         result = NFA.parser.regex_nfa(regex)
-        print(result)
+        NFA.states, NFA.transitions = result
+        NFA.process_transitions()
+        print(NFA.states)
 
     # def validate_word(self, word):
     #     valid = False

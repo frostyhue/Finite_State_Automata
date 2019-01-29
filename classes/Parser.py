@@ -183,6 +183,7 @@ class Parser(object):
             _dest_and_edge = self.parse_nfa()
             self._states.append(_dest_and_edge[0])
             _end_state = State('S' + str(self._state_number))
+            self._state_number += 1
             self._states.append(_end_state)
             self._transitions.append(Transition(_origin_and_edge[0].state_name, _origin_and_edge[1], _dest_and_edge[0].state_name))
             self._transitions.append(Transition(_dest_and_edge[0].state_name, _dest_and_edge[1], _end_state.state_name))
@@ -190,12 +191,33 @@ class Parser(object):
         elif token.type == STAR:
             self.pop_token(STAR)
             self.pop_token(LPAR)
+            if self.current_token.type == LETTER_SMALL:
+                _origin_and_end = self.parse_nfa()
+                self._states.append(_origin_and_end[0])
+                _e_state_2 = State('S' + str(self._state_number))
+                self._state_number += 1
+                self._states.append(_e_state_2)
+                self._transitions.append(
+                    Transition(_origin_and_end[0].state_name, _origin_and_end[1], _e_state_2.state_name))
+                _e_state_1 = State('S' + str(self._state_number))
+                self._state_number += 1
+                self._states.append(_e_state_1)
+                self._transitions.append(Transition(_e_state_1.state_name, '_', _origin_and_end[0].state_name))
+                _e_state_3 = State('S' + str(self._state_number))
+                self._state_number += 1
+                self._states.append(_e_state_3)
+                self._transitions.append(Transition(_e_state_2.state_name, '_', _e_state_3.state_name))
+                self._transitions.append(Transition(_e_state_2.state_name, '_', _origin_and_end[0].state_name))
+                self._transitions.append(Transition(_e_state_1.state_name, '_', _e_state_3.state_name))
+                self.pop_token(RPAR)
+                return _e_state_1, _e_state_3
             _origin_and_end = self.parse_nfa()
-            self._states.append(_origin_and_end[0])
             _e_state_1 = State('S' + str(self._state_number))
+            self._state_number += 1
             self._states.append(_e_state_1)
             self._transitions.append(Transition(_e_state_1.state_name, '_', _origin_and_end[0].state_name))
             _e_state_2 = State('S' + str(self._state_number))
+            self._state_number += 1
             self._states.append(_e_state_2)
             self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _e_state_2.state_name))
             self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _origin_and_end[0].state_name))
