@@ -1,8 +1,8 @@
 import os
 import re
-from Lexer import *
-from Parser import *
-from State_Machine import *
+from classes.Lexer import *
+from classes.Parser import *
+from classes.State_Machine import *
 
 
 def main():
@@ -23,7 +23,6 @@ def main():
     for state in state_machine.states:
         print(state)
     state_machine.process_transitions()
-    print(len(state_machine.states))
     for state in state_machine.states:
         print(state.state_name)
         for edge in state.state_edges:

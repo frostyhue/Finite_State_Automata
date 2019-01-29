@@ -18,6 +18,10 @@ class State(object):
     def __str__(self):
         return 'State({name}, {edges}, {final})'.format(name=self.state_name, edges=self.state_edges, final=self.final)
 
+    # Method returning the token as a string whenever the object if printed.
+    def __stateName__(self):
+        return str(self.state_name)
+
     def __repr__(self):
         return self.__str__()
 

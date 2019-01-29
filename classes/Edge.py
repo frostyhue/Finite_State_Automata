@@ -1,4 +1,3 @@
-from State import *
 ###############################################################################
 #                                                                             #
 #  EDGE                                                                       #
@@ -17,7 +16,7 @@ class Edge(object):
 
     # Method returning the token as a string when printed.
     def __str__(self):
-        return 'Edge({label}, {destination})'.format(label=self.edge_label, destination=self.edge_destination)
+        return 'Edge {label}, dest: {destination}'.format(label=self.edge_label, destination=self.edge_destination.state_name)
 
     def __repr__(self):
         return self.__str__()

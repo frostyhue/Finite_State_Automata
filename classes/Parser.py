@@ -1,7 +1,7 @@
-from Lexer import *
-from Transition import *
-from State import *
-from Operations import *
+from classes.Lexer import *
+from classes.Transition import *
+from classes.State import *
+from classes.Operations import *
 
 ###############################################################################
 #                                                                             #
@@ -165,6 +165,7 @@ class Parser(object):
     def parse_nfa(self):
 
         token = self.current_token
+        # the base condition where the next token is a letter or underscore
         if token.type in (LETTER_SMALL, UNDERSCORE):
             state = State('S' + str(self._state_number))
             self._state_number += 1
@@ -175,22 +176,49 @@ class Parser(object):
             if self.current_token.type == RPAR:
                 self.pop_token(RPAR)
             return state, letter
+        # if the current operation is from a to b aka Dot
         elif token.type == DOT:
             self.pop_token(DOT)
             self.pop_token(LPAR)
-            _origin_and_edge = self.parse_nfa()
-            self._states.append(_origin_and_edge[0])
-            _dest_and_edge = self.parse_nfa()
-            self._states.append(_dest_and_edge[0])
-            _end_state = State('S' + str(self._state_number))
-            self._state_number += 1
-            self._states.append(_end_state)
-            self._transitions.append(Transition(_origin_and_edge[0].state_name, _origin_and_edge[1], _dest_and_edge[0].state_name))
-            self._transitions.append(Transition(_dest_and_edge[0].state_name, _dest_and_edge[1], _end_state.state_name))
-            return _origin_and_edge[0], _end_state
+            # if first param is a letter
+            if self.current_token.type == LETTER_SMALL:
+                _origin, _edge_o = self.parse_nfa()
+                self._states.append(_origin)
+                # if second param is a letter
+                if self.current_token.type == LETTER_SMALL:
+                    _dest, _edge_d = self.parse_nfa()
+                    self._states.append(_dest)
+                    _end_state = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_end_state)
+                    self._transitions.append(Transition(_origin.state_name, _edge_o, _dest.state_name))
+                    self._transitions.append(Transition(_dest.state_name, _edge_d, _end_state.state_name))
+                    return _origin, _end_state
+                # if second param is an operation
+                else:
+                    _dest, _end_state = self.parse_nfa()
+                    self._transitions.append(Transition(_origin.state_name, _edge_o, _dest.state_name))
+                    return _origin, _end_state
+            # if first param is an operation
+            else:
+                _origin, _state_mid= self.parse_nfa()
+                self.pop_token(COMMA)
+                # if second param is a letter
+                if self.current_token.type == LETTER_SMALL:
+                    _dest, _edge_d = self.parse_nfa()
+                    self._states.append(_dest)
+                    self._transitions.append(Transition(_state_mid.state_name, _edge_d, _dest.state_name))
+                    return _origin, _dest
+                # if second param i sn operation
+                else:
+                    _dest, _end_state = self.parse_nfa()
+                    self._transitions.append(Transition(_state_mid.state_name, '_', _dest.state_name))
+                    return _origin, _end_state
+        # If the current operation is repeat aka STAR
         elif token.type == STAR:
             self.pop_token(STAR)
             self.pop_token(LPAR)
+            """If the next token is a letter, meaning it will be looping only a letter"""
             if self.current_token.type == LETTER_SMALL:
                 _origin_and_end = self.parse_nfa()
                 self._states.append(_origin_and_end[0])
@@ -210,30 +238,89 @@ class Parser(object):
                 self._transitions.append(Transition(_e_state_2.state_name, '_', _origin_and_end[0].state_name))
                 self._transitions.append(Transition(_e_state_1.state_name, '_', _e_state_3.state_name))
                 self.pop_token(RPAR)
-                return _e_state_1, _e_state_3
-            _origin_and_end = self.parse_nfa()
+                # if it was a letter or an underscore, returns the 2 newly made states
+                return _e_state_2, _e_state_3
+            # in case of the next token being an operation, another operation will be looped
+            _origin, _end_state = self.parse_nfa()
             _e_state_1 = State('S' + str(self._state_number))
             self._state_number += 1
             self._states.append(_e_state_1)
-            self._transitions.append(Transition(_e_state_1.state_name, '_', _origin_and_end[0].state_name))
+            self._transitions.append(Transition(_e_state_1.state_name, '_', _origin.state_name))
             _e_state_2 = State('S' + str(self._state_number))
             self._state_number += 1
             self._states.append(_e_state_2)
-            self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _e_state_2.state_name))
-            self._transitions.append(Transition(_origin_and_end[1].state_name, '_', _origin_and_end[0].state_name))
+            self._transitions.append(Transition(_end_state.state_name, '_', _e_state_2.state_name))
+            self._transitions.append(Transition(_end_state.state_name, '_', _origin.state_name))
             self._transitions.append(Transition(_e_state_1.state_name, '_', _e_state_2.state_name))
             self.pop_token(RPAR)
             return _e_state_1, _e_state_2
+        # it the operation is an or aka PIPE
         elif token.type == PIPE:
             self.pop_token(PIPE)
             self.pop_token(LPAR)
-            _origin_edge_letter = self.parse_nfa()
-            self._states.append(_origin_edge_letter[0])
-            _dest_second_edge = self.parse_nfa()
-            self._states.append(_dest_second_edge[0])
-            self._transitions.append(Transition(_origin_edge_letter[0].state_name, _origin_edge_letter[1], _dest_second_edge[0].state_name))
-            self._transitions.append(Transition(_origin_edge_letter[0].state_name, _dest_second_edge[1], _dest_second_edge[0].state_name))
-            return _origin_edge_letter[0], _dest_second_edge[0]
+            # if the next token is a letter
+            if self.current_token.type == LETTER_SMALL:
+                _origin, _edge_o = self.parse_nfa()
+                self._states.append(_origin)
+                _end_o = State('S' + str(self._state_number))
+                self._state_number += 1
+                self._states.append(_end_o)
+                self._transitions.append(Transition(_origin.state_name, _edge_o, _end_o.state_name))
+                # if the next token is a letter
+                if self.current_token.type == LETTER_SMALL:
+                    _dest, _edge_d = self.parse_nfa()
+                    self._transitions.append(Transition(_origin.state_name, _edge_d, _end_o.state_name))
+                    return _origin, _end_o
+                # if second param is an operation
+                else:
+                    _dest, _end_d = self.parse_nfa()
+                    _start = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_start)
+                    _end_state = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_end_state)
+                    self._transitions.append(Transition(_start.state_name, '_', _origin.state_name))
+                    self._transitions.append(Transition(_start.state_name, '_', _dest.state_name))
+                    self._transitions.append(Transition(_end_o.state_name, '_', _end_state.state_name))
+                    self._transitions.append(Transition(_end_d.state_name, '_', _end_state.state_name))
+                    return _start, _end_state
+            else:
+                _left_o, _left_d = self.parse_nfa()
+                self.pop_token(COMMA)
+                # if the next token is a letter
+                if self.current_token.type == LETTER_SMALL:
+                    _right_o, _right_l = self.parse_nfa()
+                    self._states.append(_right_o)
+                    _right_d = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_right_d)
+                    self._transitions.append(Transition(_right_o.state_name, _right_l, _right_d.state_name))
+                    _start = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_start)
+                    _end_state = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_end_state)
+                    self._transitions.append(Transition(_start.state_name, '_', _left_o.state_name))
+                    self._transitions.append(Transition(_start.state_name, '_', _right_o.state_name))
+                    self._transitions.append(Transition(_left_d.state_name, '_', _end_state.state_name))
+                    self._transitions.append(Transition(_right_d.state_name, '_',_end_state.state_name))
+                    return _start, _end_state
+                # if second param is an operation
+                else:
+                    _right_o, _right_d = self.parse_nfa()
+                    _start = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_start)
+                    _end_state = State('S' + str(self._state_number))
+                    self._state_number += 1
+                    self._states.append(_end_state)
+                    self._transitions.append(Transition(_start.state_name, '_', _left_o.state_name))
+                    self._transitions.append(Transition(_start.state_name, '_', _right_o.state_name))
+                    self._transitions.append(Transition(_left_d.state_name, '_', _end_state.state_name))
+                    self._transitions.append(Transition(_right_d.state_name, '_', _end_state.state_name))
+                    return _start, _end_state
 
         return self._states, self._transitions
 

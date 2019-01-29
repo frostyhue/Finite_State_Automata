@@ -1,5 +1,5 @@
-from Edge import *
-from Interpreter import *
+from classes.Edge import *
+from classes.Interpreter import *
 import re
 
 
@@ -41,25 +41,8 @@ class StateMachine(object):
                 states.append(state)
         return states
 
-    def from_file(self):
-        list = []
-        list_formatted = []
-        _text = ''
-        with open('file.txt') as f:
-            f_contents = f.readlines()
-            for line in f_contents:
-                if not line.isspace():
-                    list.append(line.strip())
-            for line in list:
-                if re.search(r'end.', str(line)) or re.search(r'transitions:', str(line)) or re.search(r'-->',
-                                                                                                       str(line)):
-                    _text += str(line)
-                    if re.search(r'end.', str(line)):
-                        list_formatted.append(_text)
-                        break
-                else:
-                    list_formatted.append(str(line))
-        return list_formatted
+    def parse_regex(self, _expr):
+        self.parser.regex_nfa(_expr)
 
     def from_regex(self, _expression):
         self.interpreter = Interpreter(self.parser)
@@ -74,32 +57,11 @@ class StateMachine(object):
         self.initial_state = self.parser.initial_state
 
     def process_transitions(self):
-        # dest_stat = ''
-        # for transition in self.transitions:
-        #     for state in self.states:
-        #         if state.state_name == transition.origin:
-        #             for destination in self.states:
-        #                 if destination.state_name == transition.destination:
-        #                     dest_stat = destination
-        #             print('Destination')
-        #             print(dest_stat)
-        #             state.add_edge(Edge(label=transition.edge, destination=dest_stat))
         for transition in self.transitions:
             for state in self.states:
-                if state.state_name == transition.origin:
-                    for dest_state in self.states:
-                        if dest_state.state_name == transition.destination:
-                            state.add_edge(Edge(label=transition.edge, destination=dest_state))
-
-    def check_if_finite(self):
-        return True
-
-    def regex_to_nfa(self, regex):
-        NFA = StateMachine(self.parser)
-        result = NFA.parser.regex_nfa(regex)
-        NFA.states, NFA.transitions = result
-        NFA.process_transitions()
-        print(NFA.states)
+                for dest_state in self.states:
+                    if state.state_name == transition.origin and dest_state.state_name == transition.destination:
+                        state.add_edge(Edge(label=transition.edge, destination=dest_state))
 
     # def validate_word(self, word):
     #     valid = False

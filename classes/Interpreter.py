@@ -1,5 +1,4 @@
-from Parser import *
-from NodeVisitor import *
+from classes.NodeVisitor import *
 
 ###############################################################################
 #                                                                             #

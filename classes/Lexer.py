@@ -1,7 +1,7 @@
 import re
 import sys
-from Token import *
-from Token_Regex import *
+from classes.Token import *
+from classes.Token_Regex import *
 
 ###############################################################################
 #                                                                             #
